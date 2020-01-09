@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RecipesPage from './pages/RecipesPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import jsonUsers from "./data/users";
 
 
 
@@ -15,7 +16,8 @@ class App extends React.Component {
     super(props);
     
     this.state = {
-      activeUser: null
+      activeUser: null,
+      allUsers: jsonUsers
       // {
       //   "id": "2121212",
       //   "name": "Nir"
@@ -34,7 +36,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { activeUser } = this.state;
+    const { activeUser, allUsers } = this.state;
 
     return ( 
 
@@ -43,7 +45,7 @@ class App extends React.Component {
           <HomePage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
         <Route exact path="/login">
-          <LoginPage/>
+          <LoginPage allUser={allUsers}/>
         </Route>
         <Route exact path="/recipes">
           <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}/>
