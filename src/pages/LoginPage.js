@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './LoginPage.css'
 import { Form, Button, Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -10,7 +10,8 @@ class LoginPage extends Component {
         this.state = {
             email: "",
             pwd: "",
-            showInvalidLoginError: false
+            showInvalidLoginError: false,
+            redirectToRecipesPage: false
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -28,13 +29,19 @@ class LoginPage extends Component {
     }
 
     login() {
-        const { allUsers } = this.props;
+        const { allUsers, handleLogin } = this.props;
         const { email, pwd } = this.state;
 
         const newActiveUser = allUsers.find(user => user.email.toLowerCase() === email.toLowerCase() && user.pwd === pwd);
 
         if (newActiveUser) {
-            alert(newActiveUser.fname);
+            // 1) Updating App component on the new active user
+            handleLogin(newActiveUser);
+
+            // 2) navigate to recipes page
+            this.setState({
+                redirectToRecipesPage: true
+            });
         } else {
             this.setState({
                 showInvalidLoginError: true
@@ -44,7 +51,11 @@ class LoginPage extends Component {
     }
 
     render() {
-        const { email, pwd, showInvalidLoginError } = this.state;
+        const { email, pwd, showInvalidLoginError, redirectToRecipesPage } = this.state;
+
+        if (redirectToRecipesPage) {
+            return <Redirect to="/recipes"/>
+        }
 
         const errorAlert = showInvalidLoginError ? <Alert variant="danger">Invalid email or password!</Alert> : null;
 
