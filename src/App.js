@@ -15,14 +15,22 @@ class App extends React.Component {
     super(props);
     
     this.state = {
-      activeUser: null
-      // {
-      //   "id": "2121212",
-      //   "name": "Nir"
-      // }
+      activeUser:       {
+        "id": "2121212",
+        "name": "Nir"
+      }
+
+      //null
     }
+
+    this.handleLogout = this.handleLogout.bind(this);
   }
   
+  handleLogout() {
+    this.setState({
+      activeUser: null
+    })
+  }
 
   render() {
     const { activeUser } = this.state;
@@ -31,13 +39,13 @@ class App extends React.Component {
 
       <Switch>
         <Route exact path="/">
-          <HomePage activeUser={activeUser}/>
+          <HomePage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
         <Route exact path="/login">
           <LoginPage/>
         </Route>
         <Route exact path="/recipes">
-          <RecipesPage/>
+          <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
 
       </Switch>
