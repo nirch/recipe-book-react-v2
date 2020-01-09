@@ -8,6 +8,7 @@ import RecipesPage from './pages/RecipesPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import jsonUsers from "./data/users";
 import jsonRecipes from "./data/recipes"
+import RecipeNavbar from './components/RecipeNavbar';
 
 
 
@@ -20,6 +21,7 @@ class App extends React.Component {
       activeUser: null,
       allUsers: jsonUsers,
       allRecipes: jsonRecipes
+      // allRecipes: jsonRecipes.map(recipe => new RecipeModel(recipe));
       // {
       //   "id": "2121212",
       //   "name": "Nir"
