@@ -45,7 +45,7 @@ class App extends React.Component {
           <HomePage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
         <Route exact path="/login">
-          <LoginPage allUser={allUsers}/>
+          <LoginPage allUsers={allUsers}/>
         </Route>
         <Route exact path="/recipes">
           <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}/>
