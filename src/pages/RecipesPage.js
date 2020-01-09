@@ -4,6 +4,7 @@ import RecipeNavbar from '../components/RecipeNavbar';
 import { Redirect } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
 import './RecipesPage.css'
+import NewRecipeModal from '../components/NewRecipeModal';
 
 class RecipesPage extends Component {
     constructor(props) {
@@ -49,20 +50,7 @@ class RecipesPage extends Component {
 
                 </Container>
 
-                <Modal show={showNewRecipeModal} onHide={this.handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={this.handleClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={this.handleClose}>
-                            Save Changes
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
+                <NewRecipeModal show={showNewRecipeModal} handleClose={this.handleClose}/>
 
             </div>
         );
