@@ -8,8 +8,8 @@ class LoginPage extends Component {
         super(props);
 
         this.state = {
-            email: "",
-            pwd: "",
+            email: "nir@nir.com",
+            pwd: "123",
             showInvalidLoginError: false,
             redirectToRecipesPage: false
         }

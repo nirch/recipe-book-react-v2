@@ -9,17 +9,20 @@ class RecipesPage extends Component {
     }
     
     render() {
-        const { activeUser, handleLogout } = this.props;
+        const { activeUser, handleLogout, recipes } = this.props;
 
         if (!activeUser) {
             return <Redirect to="/"/>
         }
+
+        const recipesView = recipes.map(recipe => <p>{recipe.name}</p>)
 
         return (
             <div>
                 <RecipeNavbar activeUser={activeUser} handleLogout={handleLogout}/>
                 <Container>
                 <h1>{activeUser.fname}'s Recipes</h1>
+                {recipesView}
                 </Container>
             </div>
         );

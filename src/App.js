@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import RecipesPage from './pages/RecipesPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import jsonUsers from "./data/users";
+import jsonRecipes from "./data/recipes"
 
 
 
@@ -17,7 +18,8 @@ class App extends React.Component {
     
     this.state = {
       activeUser: null,
-      allUsers: jsonUsers
+      allUsers: jsonUsers,
+      allRecipes: jsonRecipes
       // {
       //   "id": "2121212",
       //   "name": "Nir"
@@ -43,7 +45,10 @@ class App extends React.Component {
   }
 
   render() {
-    const { activeUser, allUsers } = this.state;
+    const { activeUser, allUsers, allRecipes } = this.state;
+
+    const activeUserRecipes = activeUser ? 
+      allRecipes.filter(recipe => recipe.userId === activeUser.id) : null
 
     return ( 
 
@@ -55,7 +60,7 @@ class App extends React.Component {
           <LoginPage allUsers={allUsers} handleLogin={this.handleLogin}/>
         </Route>
         <Route exact path="/recipes">
-          <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}/>
+          <RecipesPage activeUser={activeUser} recipes={activeUserRecipes} handleLogout={this.handleLogout}/>
         </Route>
 
       </Switch>
