@@ -27,8 +27,9 @@ class NewRecipeModal extends Component {
 
     createRecipe() {
         const { name, desc, img } = this.state;
-
-        alert(`${name} ${desc} ${img}`);
+        const newRecipe = { name, desc, img};
+        this.props.handleNewRecipe(newRecipe);
+        this.props.handleClose();
     }
 
     render() {

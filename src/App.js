@@ -32,6 +32,7 @@ class App extends React.Component {
 
     this.handleLogout = this.handleLogout.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleNewRecipe = this.handleNewRecipe.bind(this);
   }
   
   handleLogin(user) {
@@ -45,6 +46,11 @@ class App extends React.Component {
       activeUser: null
     })
   }
+
+  handleNewRecipe(newRecipe) {
+    console.log(newRecipe);
+  }
+
 
   render() {
     const { activeUser, allUsers, allRecipes } = this.state;
@@ -62,7 +68,8 @@ class App extends React.Component {
           <LoginPage allUsers={allUsers} handleLogin={this.handleLogin}/>
         </Route>
         <Route exact path="/recipes">
-          <RecipesPage activeUser={activeUser} recipes={activeUserRecipes} handleLogout={this.handleLogout}/>
+          <RecipesPage activeUser={activeUser} recipes={activeUserRecipes} handleLogout={this.handleLogout} 
+            handleNewRecipe={this.handleNewRecipe}/>
         </Route>
 
       </Switch>

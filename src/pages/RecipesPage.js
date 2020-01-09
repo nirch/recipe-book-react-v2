@@ -15,12 +15,17 @@ class RecipesPage extends Component {
         }
 
         this.handleClose = this.handleClose.bind(this);
+        this.handleNewRecipe = this.handleNewRecipe.bind(this);
     }
 
     handleClose() {
         this.setState({
             showNewRecipeModal: false
         })
+    }
+
+    handleNewRecipe(newRecipe) {
+        this.props.handleNewRecipe(newRecipe);
     }
 
     render() {
@@ -32,7 +37,7 @@ class RecipesPage extends Component {
         }
 
         const recipesView = recipes.map(recipe =>
-            <Col lg={3} md={6}>
+            <Col lg={3} md={6} key={recipe.id}>
                 <RecipeCard recipe={recipe} />
             </Col>)
 
@@ -50,7 +55,7 @@ class RecipesPage extends Component {
 
                 </Container>
 
-                <NewRecipeModal show={showNewRecipeModal} handleClose={this.handleClose}/>
+                <NewRecipeModal show={showNewRecipeModal} handleClose={this.handleClose} handleNewRecipe={this.handleNewRecipe}/>
 
             </div>
         );
