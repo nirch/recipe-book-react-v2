@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Row, Col, Image } from 'react-bootstrap';
 
 class NewRecipeModal extends Component {
     constructor(props) {
@@ -30,6 +30,11 @@ class NewRecipeModal extends Component {
         const newRecipe = { name, desc, img};
         this.props.handleNewRecipe(newRecipe);
         this.props.handleClose();
+        this.setState({
+            name: "",
+            desc: "",
+            img: ""
+        })
     }
 
     render() {
@@ -57,8 +62,16 @@ class NewRecipeModal extends Component {
 
                         <Form.Group>
                             <Form.Label>Image URL</Form.Label>
+                            <Row>
+                                <Col>
                             <Form.Control name="img" value={img}
                                 type="text" placeholder="Enter Recipe Image URL" onChange={this.handleInputChange} />
+                                </Col>
+                                <Col>
+                                    <Image src={img} fluid/>
+                                </Col>
+
+                            </Row>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
