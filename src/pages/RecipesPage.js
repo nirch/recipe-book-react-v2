@@ -27,10 +27,10 @@ class RecipesPage extends Component {
             const query = new Parse.Query(Recipe);
             query.equalTo("userId", Parse.User.current());
             query.find().then((parseRecipes) => {
-              const recipes = parseRecipes.map(parseRecipe => new RecipeModel(parseRecipe));
-              this.setState({recipes});
+                const recipes = parseRecipes.map(parseRecipe => new RecipeModel(parseRecipe));
+                this.setState({ recipes });
             }, (error) => {
-              console.error('Error while fetching Recipe', error);
+                console.error('Error while fetching Recipe', error);
             });
         }
     }
@@ -42,7 +42,22 @@ class RecipesPage extends Component {
     }
 
     handleNewRecipe(newRecipe) {
-        this.props.handleNewRecipe(newRecipe);
+        const Recipe = Parse.Object.extend('Recipe');
+        const newParseRecipe = new Recipe();
+
+        newParseRecipe.set('name', newRecipe.name);
+        newParseRecipe.set('desc', newRecipe.desc);
+        newParseRecipe.set('image', new Parse.File(newRecipe.fileImg.file.name, newRecipe.fileImg.file));
+        newParseRecipe.set('userId', Parse.User.current());
+
+        newParseRecipe.save().then(theCreatedParseRecipe => {
+                console.log('Recipe created', theCreatedParseRecipe);
+                this.setState({
+                    recipes: this.state.recipes.concat(new RecipeModel(theCreatedParseRecipe))
+                })
+        }, error => {
+                console.error('Error while creating Recipe: ', error);
+        });
     }
 
     render() {
@@ -64,7 +79,7 @@ class RecipesPage extends Component {
                 <Container>
                     <div className="recipes-header">
                         <h1>{activeUser.fname}'s Recipes</h1>
-                        <Button onClick={() => {this.setState({showNewRecipeModal: true})}}>New Recipe</Button>
+                        <Button onClick={() => { this.setState({ showNewRecipeModal: true }) }}>New Recipe</Button>
                     </div>
                     <Row>
                         {recipesView}
@@ -72,7 +87,7 @@ class RecipesPage extends Component {
 
                 </Container>
 
-                <NewRecipeModal show={showNewRecipeModal} handleClose={this.handleClose} handleNewRecipe={this.handleNewRecipe}/>
+                <NewRecipeModal show={showNewRecipeModal} handleClose={this.handleClose} handleNewRecipe={this.handleNewRecipe} />
 
             </div>
         );

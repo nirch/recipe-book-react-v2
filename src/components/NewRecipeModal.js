@@ -49,7 +49,7 @@ class NewRecipeModal extends Component {
 
     createRecipe() {
         const { name, desc, fileImg } = this.state;
-        const newRecipe = { name, desc, img: fileImg.URL};
+        const newRecipe = { name, desc, fileImg };
         this.props.handleNewRecipe(newRecipe);
         this.props.handleClose();
         this.setState({
