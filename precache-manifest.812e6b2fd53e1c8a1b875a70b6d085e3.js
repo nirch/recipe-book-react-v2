@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "cee0c1b7ad2c23c8facb227b412bab28",
+    "revision": "97c04b11b873935fde4e1ccf506af214",
     "url": "/recipe-book-react-v2/index.html"
   },
   {
-    "revision": "6e4c1193d1e0c1499f74",
+    "revision": "4106ae41d2e4a6136575",
     "url": "/recipe-book-react-v2/static/css/2.47e06e2e.chunk.css"
   },
   {
-    "revision": "0be623e4cdd1658ecec3",
+    "revision": "cf34a83cf63190e069bf",
     "url": "/recipe-book-react-v2/static/css/main.9479de29.chunk.css"
   },
   {
-    "revision": "6e4c1193d1e0c1499f74",
-    "url": "/recipe-book-react-v2/static/js/2.c3c9e47a.chunk.js"
+    "revision": "4106ae41d2e4a6136575",
+    "url": "/recipe-book-react-v2/static/js/2.694eff7d.chunk.js"
   },
   {
     "revision": "86afaa925e0f432774bf95b19b6933fb",
-    "url": "/recipe-book-react-v2/static/js/2.c3c9e47a.chunk.js.LICENSE"
+    "url": "/recipe-book-react-v2/static/js/2.694eff7d.chunk.js.LICENSE"
   },
   {
-    "revision": "0be623e4cdd1658ecec3",
-    "url": "/recipe-book-react-v2/static/js/main.593537be.chunk.js"
+    "revision": "cf34a83cf63190e069bf",
+    "url": "/recipe-book-react-v2/static/js/main.0619ebe8.chunk.js"
   },
   {
     "revision": "2d332c69afe0a7c2ad12",
