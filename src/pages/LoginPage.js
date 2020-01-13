@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './LoginPage.css'
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
+import Parse from 'parse'
+import UserModel from '../model/UserModel';
 
 class LoginPage extends Component {
     constructor(props) {
@@ -32,22 +34,26 @@ class LoginPage extends Component {
         const { allUsers, handleLogin } = this.props;
         const { email, pwd } = this.state;
 
-        const newActiveUser = allUsers.find(user => user.email.toLowerCase() === email.toLowerCase() && user.pwd === pwd);
+        // Pass the username and password to logIn function
+        Parse.User.logIn(email, pwd).then(parseUser => {
+            // Do stuff after successful login
+            const user = new UserModel(parseUser);
+            console.log('Logged in user', user);
 
-        if (newActiveUser) {
             // 1) Updating App component on the new active user
-            handleLogin(newActiveUser);
+            handleLogin(user);
 
             // 2) navigate to recipes page
             this.setState({
                 redirectToRecipesPage: true
             });
-        } else {
+
+        }).catch(error => {
+            console.error('Error while logging in user', error);
             this.setState({
                 showInvalidLoginError: true
             });
-        }
-
+        })
     }
 
     render() {

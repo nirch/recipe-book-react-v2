@@ -6,7 +6,6 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RecipesPage from './pages/RecipesPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import jsonUsers from "./data/users";
 import jsonRecipes from "./data/recipes"
 import RecipeNavbar from './components/RecipeNavbar';
 
@@ -19,7 +18,6 @@ class App extends React.Component {
     
     this.state = {
       activeUser: null,
-      allUsers: jsonUsers,
       allRecipes: jsonRecipes
       // allRecipes: jsonRecipes.map(recipe => new RecipeModel(recipe));
       // {
@@ -61,7 +59,7 @@ class App extends React.Component {
 
 
   render() {
-    const { activeUser, allUsers, allRecipes } = this.state;
+    const { activeUser, allRecipes } = this.state;
 
     const activeUserRecipes = activeUser ? 
       allRecipes.filter(recipe => recipe.userId === activeUser.id) : null
@@ -73,7 +71,7 @@ class App extends React.Component {
           <HomePage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
         <Route exact path="/login">
-          <LoginPage allUsers={allUsers} handleLogin={this.handleLogin}/>
+          <LoginPage handleLogin={this.handleLogin}/>
         </Route>
         <Route exact path="/recipes">
           <RecipesPage activeUser={activeUser} recipes={activeUserRecipes} handleLogout={this.handleLogout} 
