@@ -8,11 +8,33 @@ class NewRecipeModal extends Component {
         this.state = {
             name: "",
             desc: "",
-            img: ""
+            fileImg: {
+                file: undefined,
+                URL: undefined
+            }
         }
 
         this.handleInputChange = this.handleInputChange.bind(this);
         this.createRecipe = this.createRecipe.bind(this);
+        this.handleFileChange = this.handleFileChange.bind(this);
+    }
+
+    handleFileChange(event) {
+        let newFileImg;
+        if (event.target.files[0]) {
+            newFileImg = {
+                file: event.target.files[0],
+                URL: URL.createObjectURL(event.target.files[0])
+            }
+        } else {
+            newFileImg = {
+                file: undefined,
+                URL: undefined
+            }
+        }
+
+
+        this.setState({fileImg: newFileImg});        
     }
 
     handleInputChange(event) {
@@ -26,8 +48,8 @@ class NewRecipeModal extends Component {
     }
 
     createRecipe() {
-        const { name, desc, img } = this.state;
-        const newRecipe = { name, desc, img};
+        const { name, desc, fileImg } = this.state;
+        const newRecipe = { name, desc, img: fileImg.URL};
         this.props.handleNewRecipe(newRecipe);
         this.props.handleClose();
         this.setState({
@@ -39,7 +61,7 @@ class NewRecipeModal extends Component {
 
     render() {
         const { show, handleClose } = this.props;
-        const { name, desc, img } = this.state;
+        const { name, desc, fileImg } = this.state;
 
         return (
             <Modal show={show} onHide={handleClose}>
@@ -64,11 +86,10 @@ class NewRecipeModal extends Component {
                             <Form.Label>Image URL</Form.Label>
                             <Row>
                                 <Col>
-                            <Form.Control name="img" value={img}
-                                type="text" placeholder="Enter Recipe Image URL" onChange={this.handleInputChange} />
+                            <Form.Control type="file" onChange={this.handleFileChange} />
                                 </Col>
                                 <Col>
-                                    <Image src={img} fluid/>
+                                    <Image src={fileImg.URL} fluid/>
                                 </Col>
 
                             </Row>
