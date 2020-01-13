@@ -5,17 +5,34 @@ import { Redirect } from 'react-router-dom';
 import RecipeCard from '../components/RecipeCard';
 import './RecipesPage.css'
 import NewRecipeModal from '../components/NewRecipeModal';
+import Parse from 'parse'
+import RecipeModel from '../model/RecipeModel'
 
 class RecipesPage extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            recipes: [],
             showNewRecipeModal: false
         }
 
         this.handleClose = this.handleClose.bind(this);
         this.handleNewRecipe = this.handleNewRecipe.bind(this);
+    }
+
+    componentDidMount() {
+        if (this.props.activeUser) {
+            const Recipe = Parse.Object.extend('Recipe');
+            const query = new Parse.Query(Recipe);
+            query.equalTo("userId", Parse.User.current());
+            query.find().then((parseRecipes) => {
+              const recipes = parseRecipes.map(parseRecipe => new RecipeModel(parseRecipe));
+              this.setState({recipes});
+            }, (error) => {
+              console.error('Error while fetching Recipe', error);
+            });
+        }
     }
 
     handleClose() {
@@ -29,8 +46,8 @@ class RecipesPage extends Component {
     }
 
     render() {
-        const { showNewRecipeModal } = this.state;
-        const { activeUser, handleLogout, recipes } = this.props;
+        const { showNewRecipeModal, recipes } = this.state;
+        const { activeUser, handleLogout } = this.props;
 
         if (!activeUser) {
             return <Redirect to="/" />

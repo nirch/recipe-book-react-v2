@@ -6,8 +6,6 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RecipesPage from './pages/RecipesPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import jsonRecipes from "./data/recipes"
-import RecipeNavbar from './components/RecipeNavbar';
 
 
 
@@ -18,19 +16,10 @@ class App extends React.Component {
     
     this.state = {
       activeUser: null,
-      allRecipes: jsonRecipes
-      // allRecipes: jsonRecipes.map(recipe => new RecipeModel(recipe));
-      // {
-      //   "id": "2121212",
-      //   "name": "Nir"
-      // }
-
-      //null
     }
 
     this.handleLogout = this.handleLogout.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
-    this.handleNewRecipe = this.handleNewRecipe.bind(this);
   }
   
   handleLogin(user) {
@@ -45,24 +34,8 @@ class App extends React.Component {
     })
   }
 
-  handleNewRecipe(newRecipe) {
-    const { allRecipes, activeUser } = this.state;
-
-    // adding one to the id of the last recipe in the array
-    newRecipe.id = allRecipes[allRecipes.length - 1].id + 1;
-    newRecipe.userId = activeUser.id;
-
-    this.setState({
-      allRecipes: allRecipes.concat(newRecipe)
-    })
-  }
-
-
   render() {
-    const { activeUser, allRecipes } = this.state;
-
-    const activeUserRecipes = activeUser ? 
-      allRecipes.filter(recipe => recipe.userId === activeUser.id) : null
+    const { activeUser } = this.state;
 
     return ( 
 
@@ -74,8 +47,7 @@ class App extends React.Component {
           <LoginPage handleLogin={this.handleLogin}/>
         </Route>
         <Route exact path="/recipes">
-          <RecipesPage activeUser={activeUser} recipes={activeUserRecipes} handleLogout={this.handleLogout} 
-            handleNewRecipe={this.handleNewRecipe}/>
+          <RecipesPage activeUser={activeUser} handleLogout={this.handleLogout}/>
         </Route>
 
       </Switch>
