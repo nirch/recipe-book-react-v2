@@ -21,17 +21,21 @@ class RecipesPage extends Component {
         this.handleNewRecipe = this.handleNewRecipe.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         if (this.props.activeUser) {
             const Recipe = Parse.Object.extend('Recipe');
             const query = new Parse.Query(Recipe);
             query.equalTo("userId", Parse.User.current());
-            query.find().then((parseRecipes) => {
-                const recipes = parseRecipes.map(parseRecipe => new RecipeModel(parseRecipe));
-                this.setState({ recipes });
-            }, (error) => {
-                console.error('Error while fetching Recipe', error);
-            });
+            
+            const parseRecipes = await query.find();
+            const recipes = parseRecipes.map(parseRecipe => new RecipeModel(parseRecipe));
+            this.setState({ recipes });
+            // query.find().then((parseRecipes) => {
+            //     const recipes = parseRecipes.map(parseRecipe => new RecipeModel(parseRecipe));
+            //     this.setState({ recipes });
+            // }, (error) => {
+            //     console.error('Error while fetching Recipe', error);
+            // });
         }
     }
 
