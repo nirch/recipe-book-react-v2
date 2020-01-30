@@ -7,6 +7,7 @@ import './RecipesPage.css'
 import NewRecipeModal from '../components/NewRecipeModal';
 import Parse from 'parse'
 import RecipeModel from '../model/RecipeModel'
+import {Pie} from 'react-chartjs-2';
 
 class RecipesPage extends Component {
     constructor(props) {
@@ -68,6 +69,27 @@ class RecipesPage extends Component {
         const { showNewRecipeModal, recipes } = this.state;
         const { activeUser, handleLogout } = this.props;
 
+        const chartData = {
+            labels: [
+                'Red',
+                'Blue',
+                'Yellow'
+            ],
+            datasets: [{
+                data: [300, 50, 100],
+                backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56'
+                ],
+                hoverBackgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56'
+                ]
+            }]
+        };
+
         if (!activeUser) {
             return <Redirect to="/" />
         }
@@ -88,7 +110,7 @@ class RecipesPage extends Component {
                     <Row>
                         {recipesView}
                     </Row>
-
+                    <Pie data={chartData} />
                 </Container>
 
                 <NewRecipeModal show={showNewRecipeModal} handleClose={this.handleClose} handleNewRecipe={this.handleNewRecipe} />
