@@ -65,30 +65,42 @@ class RecipesPage extends Component {
         });
     }
 
+    getChartData(recipes) {
+        let recipesData = [0, 0];
+
+        recipes.forEach(recipe => {
+            if (recipe.difficulty === 1) {
+                ++recipesData[0];
+            } else if (recipe.difficulty === 2) {
+                ++recipesData[1];
+            }
+        })
+        
+
+        return {
+            labels: [
+                'Easy',
+                'Hard',
+            ],
+            datasets: [{
+                data: recipesData,
+                backgroundColor: [
+                '#FF6384',
+                '#36A2EB'
+                ],
+                hoverBackgroundColor: [
+                '#FF6384',
+                '#36A2EB'                ]
+            }]
+        };
+
+    }
+
     render() {
         const { showNewRecipeModal, recipes } = this.state;
         const { activeUser, handleLogout } = this.props;
 
-        const chartData = {
-            labels: [
-                'Red',
-                'Blue',
-                'Yellow'
-            ],
-            datasets: [{
-                data: [300, 50, 100],
-                backgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
-                ],
-                hoverBackgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56'
-                ]
-            }]
-        };
+        const chartData = this.getChartData(recipes);
 
         if (!activeUser) {
             return <Redirect to="/" />

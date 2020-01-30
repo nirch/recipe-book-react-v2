@@ -4,5 +4,6 @@ export default class RecipeModel {
         this.name = parseRecipe.get("name");
         this.desc = parseRecipe.get("desc");
         this.img = parseRecipe.get("image")._url;
+        this.difficulty = parseRecipe.get("difficulty");
     } 
 }
