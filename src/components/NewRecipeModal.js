@@ -1,25 +1,17 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Form, Row, Col, Image } from 'react-bootstrap';
 
-class NewRecipeModal extends Component {
-    constructor(props) {
-        super(props);
+// class NewRecipeModal extends Component {
+const NewRecipeModal = (props) => {
+    const {show, handleClose, handleNewRecipe} = props;
+    const [name, setName] = useState("");
+    const [desc, setDesc] = useState("");
+    const [fileImg, setFileImg] = useState({
+        file: undefined,
+        URL: undefined
+    });
 
-        this.state = {
-            name: "",
-            desc: "",
-            fileImg: {
-                file: undefined,
-                URL: undefined
-            }
-        }
-
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.createRecipe = this.createRecipe.bind(this);
-        this.handleFileChange = this.handleFileChange.bind(this);
-    }
-
-    handleFileChange(event) {
+    const handleFileChange = (event) => {
         let newFileImg;
         if (event.target.files[0]) {
             newFileImg = {
@@ -33,79 +25,64 @@ class NewRecipeModal extends Component {
             }
         }
 
-
-        this.setState({fileImg: newFileImg});        
+        setFileImg(newFileImg);
     }
 
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]: value
+    const createRecipe = () => {
+        const newRecipe = { name, desc, fileImg };
+        handleNewRecipe(newRecipe);
+        handleClose();
+        setName("");
+        setDesc("");
+        setFileImg({
+            file: undefined,
+            URL: undefined
         });
     }
 
-    createRecipe() {
-        const { name, desc, fileImg } = this.state;
-        const newRecipe = { name, desc, fileImg };
-        this.props.handleNewRecipe(newRecipe);
-        this.props.handleClose();
-        this.setState({
-            name: "",
-            desc: "",
-            img: ""
-        })
-    }
+    return (
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>New Recipe</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <Form>
+                    <Form.Group>
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control name="name" value={name}
+                            type="text" placeholder="Enter Recipe Name" onChange={(e) => setName(e.target.value)} />
+                    </Form.Group>
 
-    render() {
-        const { show, handleClose } = this.props;
-        const { name, desc, fileImg } = this.state;
+                    <Form.Group>
+                        <Form.Label>Description</Form.Label>
+                        <Form.Control name="desc" value={desc}
+                            type="text" placeholder="Enter Recipe Description" onChange={(e) => setDesc(e.target.value)} />
+                    </Form.Group>
 
-        return (
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>New Recipe</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        <Form.Group>
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control name="name" value={name}
-                                type="text" placeholder="Enter Recipe Name" onChange={this.handleInputChange} />
-                        </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Image URL</Form.Label>
+                        <Row>
+                            <Col>
+                                <Form.Control type="file" onChange={handleFileChange} />
+                            </Col>
+                            <Col>
+                                <Image src={fileImg.URL} fluid />
+                            </Col>
 
-                        <Form.Group>
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control name="desc" value={desc}
-                                type="text" placeholder="Enter Recipe Description" onChange={this.handleInputChange} />
-                        </Form.Group>
-
-                        <Form.Group>
-                            <Form.Label>Image URL</Form.Label>
-                            <Row>
-                                <Col>
-                            <Form.Control type="file" onChange={this.handleFileChange} />
-                                </Col>
-                                <Col>
-                                    <Image src={fileImg.URL} fluid/>
-                                </Col>
-
-                            </Row>
-                        </Form.Group>
-                    </Form>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Cancel
+                        </Row>
+                    </Form.Group>
+                </Form>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Cancel
                 </Button>
-                    <Button variant="success" onClick={this.createRecipe}>
-                        Create
+                <Button variant="success" onClick={createRecipe}>
+                    Create
                 </Button>
-                </Modal.Footer>
-            </Modal>);
-    }
+            </Modal.Footer>
+        </Modal>
+    );
 }
 
 export default NewRecipeModal;
